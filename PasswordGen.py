@@ -1,4 +1,4 @@
-import string
+import string #importing libraries and os
 try:import posix as os
 except:import os
 import sys
