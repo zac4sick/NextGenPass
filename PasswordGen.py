@@ -10,8 +10,8 @@ import base64
 import hashlib
 from Crypto import Random
 from Crypto.Cipher import AES
-import pyperclip
-import msvcrt
+import pyperclip #for copyboard function
+import msvcrt #Functioning for windows services
 import shutil
 import zipfile
 import json
@@ -20,33 +20,25 @@ import json
 password_placeholder='*'
 max_index=51
 
-if os.name=='posix':pass
-else:from notify import notify
-def typing(text: str,color="yellow",typing_speed=50):
-    for character in text:
-        sys.stdout.write(colored(character,color))
-        sys.stdout.flush()
-        sleep(random() * 10.0 / typing_speed )
-
 def clear():
    if os.name=='posix':_=os.system('clear')
    else:_=os.system('cls')
 
 def generate_random_password(maxr=40):
     symbols=['!','@','#','$','%','&','_','+','?','/','*',"'",'"']
-    source = string.ascii_uppercase + string.ascii_lowercase + string.digits+choice(symbols)
-    return ''.join(choice(f"{source},{choice(symbols)}{choice(symbols)}") for x in range(1,maxr))
+    source = string.ascii_uppercase + string.ascii_lowercase + string.digits+choice(symbols)  
+    return ''.join(choice(f"{source},{choice(symbols)}{choice(symbols)}") for x in range(1,maxr))  #joining source and randomly selected symbols 
 
-def initialize(path):
+def initialize(path): #path intialization
     with open(path,"r") as rnf:
         exec(rnf.read())
         clear()
 
-def password_input(prompt=''):
+def password_input(prompt=''): #Taking the password input 
     p_s = ''
     proxy_string = [' '] * max_index
     while True:
-        sys.stdout.write('\x0D' + prompt + ''.join(proxy_string))
+        sys.stdout.write('\x0D' + prompt + ''.join(proxy_string)) 
         c = msvcrt.getch()
         if c == b'\r':break
         elif c == b'\x08':
@@ -59,7 +51,7 @@ def password_input(prompt=''):
     sys.stdout.write('\n')
     return p_s
 
-def compress(files,archive,password):
+def compress(files,archive,password): #archiving password
     with zipfile.ZipFile(archive, "w") as zf:
         for file in files:
             zf.write(file)
@@ -85,4 +77,4 @@ if __name__=="__main__":
     print('Password: ',password_input("Enter password: "))
     print('Generated Random password (70-bit):',generate_random_password(70))
     print('Generated Random password (Default):',generate_random_password())
-    notify("Tite","This is a notification")
+    
