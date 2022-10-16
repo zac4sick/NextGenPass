@@ -1,8 +1,8 @@
-from os import remove
-from addons import *
+from os import remove #importing libraries
+from addons import * 
 clear()
-Master_password=str()
-primary_color='cyan'
+Master_password=str() #getting mast.password string 
+primary_color='red' 
 
 class AESCipher(object):
 
